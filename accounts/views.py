@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib import auth
 # IMPORT DJANGO USER MODEL
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
@@ -46,7 +47,7 @@ def login(request):
 
     if user is not None:
       auth.login(request, user)
-      return JsonResponse({'status': 200, 'message': 'Login success'}, status=200)
+      return JsonResponse({'status': 200, 'message': 'Login success', 'user': model_to_dict(user)['id']}, status=200)
     else:
       return JsonResponse({'status': 400, 'message': 'Invalid credentials'}, status=400)
 
